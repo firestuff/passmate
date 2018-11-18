@@ -1,0 +1,160 @@
+@import url("https://use.typekit.net/hld2vds.css");
+@import url('https://fonts.googleapis.com/css?family=Inconsolata:700');
+
+@font-face {
+	font-family: 'copernicus';
+       	src: url('Copernicus-Semibold.woff2') format('woff2');
+}
+
+@page {
+	size: letter landscape;
+	margin: 0;
+}
+
+body {
+	margin: 0;
+	font-family: 'proxima-nova';
+	font-weight: 400;
+}
+
+h1 {
+	font-family: 'copernicus';
+	font-weight: 600;
+	align-self: center;
+}
+
+h2 {
+	font-family: 'proxima-nova';
+	font-weight: 600;
+	align-self: center;
+}
+
+side {
+	page-break-before: always;
+	page-break-inside: avoid;
+
+	width: 100%;
+	height: 100%;
+
+	display: flex;
+	flex-direction: row;
+}
+
+side:nth-of-type(even) {
+	transform: rotateZ(180deg);
+}
+
+page {
+	flex-basis: 0;
+	flex-grow: 1;
+	flex-shrink: 0;
+	position: relative;
+
+	padding: 1.5em;
+
+	display: flex;
+	flex-direction: column;
+}
+
+page:first-of-type {
+	border-right: 1px black solid;
+}
+
+pagenum {
+	order: 99;
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+}
+
+page:first-of-type > pagenum {
+}
+
+page:last-of-type > pagenum {
+	align-self: flex-end;
+}
+
+letter {
+	font-family: 'copernicus';
+	font-weight: 600;
+	font-size: 4em;
+	margin-bottom: 0.2em;
+}
+
+page:last-of-type > letter {
+	align-self: flex-end;
+}
+
+blurb {
+	text-align: justify;
+	margin-bottom: 1em;
+}
+
+owner {
+	display: block;
+	width: 11em;
+
+	border-bottom: black 1px dotted;
+
+	font-family: 'proxima-nova';
+	font-weight: 600;
+	font-size: 1.5em;
+
+	text-align: center;
+	align-self: center;
+
+	margin-top: 1em;
+}
+
+recovery {
+	display: block;
+	width: 17em;
+
+	border-bottom: black 1px dotted;
+
+	font-family: 'Inconsolata';
+	font-weight: 700;
+	font-size: 1.5em;
+
+	text-align: center;
+	align-self: center;
+
+	margin-top: 1em;
+}
+
+passwordBlock {
+	display: grid;
+	margin-bottom: 1.5em;
+	font-size: 1.5em;
+
+	grid-template:
+		[password-start] "passwordLabel password" [password-end]
+		[website-start] "websiteLabel website" [website-end]
+		[username-start] "usernameLabel username" [username-end];
+	grid-template-columns: 5em auto;
+	grid-column-gap: 0.5em;
+	grid-row-gap: 0.2em;
+}
+
+passwordLabel,websiteLabel,usernameLabel {
+	text-align: right;
+}
+
+password {
+	display: block;
+	font-family: 'Inconsolata';
+	font-weight: 700;
+}
+
+passwordSymbols {
+	color: darkgrey;
+	border: 1px darkgrey dotted;
+	margin-left: 0.2em;
+}
+
+website,username {
+	width: 100%;
+	border-bottom: black 1px dotted;
+	margin-bottom: 0.17em;
+}
