@@ -54,7 +54,7 @@ class PassMate {
 			this.ownerOut.innerText = this.ownerIn.innerText;
 		});
 
-		this.addElement('blurb', overview, 'The book needs to be printed two-sided to make sense; you need to use a printer that supports that. The book uses 14 sheets of paper and provides 260 unique passwords, organized into groups of 10 by website name.');
+		this.addElement('blurb', overview, 'The book needs to be printed two-sided to make sense; you need to use a printer that supports that. The book uses 14 sheets of paper and provides 260 unique passwords, organized into groups of 10 by first letter of website name.');
 		let print = this.addElement('blurb', overview, 'You can print the book now by clicking here.');
 		print.style.fontWeight = 'bold';
 		print.style.cursor = 'pointer';
@@ -112,7 +112,7 @@ class PassMate {
 		this.addElement('blurb', container, 'PassMate makes it easier to use unique, strong passwords for each website. This book is generated just for you, with high-security passwords that are different for each person. The passwords are never sent to PassMate.');
 
 		this.addElement('h2', container, 'Creating a new account');
-		this.addElement('blurb', container, 'When a website asks you to choose a password, find the page in this book by the first letter of the website name, then choose the next unused password on the page. Write down the website name and username next to your new password. If the website requires symbols in the password, circle the ?! at the end of the password.');
+		this.addElement('blurb', container, 'When a website asks you to choose a password, find the page in this book by the first letter of the website name, then choose the next unused password on the page. Write down the website name and username next to your new password. If the website requires symbols in the password, circle the ?! at the end of the password, and include them when you type it in.');
 
 		this.addElement('h2', container, 'Logging in');
 		this.addElement('blurb', container, 'It\'s not possible for most people to memorize secure, unique passwords for every website they use. Use this book as a reference whenever you log into a website, finding the page by the website name\'s first letter.');

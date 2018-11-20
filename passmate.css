@@ -189,7 +189,9 @@ password {
 passwordSymbols {
 	color: darkgrey;
 	border: 1px darkgrey dotted;
-	margin-left: 0.2em;
+	border-radius: 1em;
+	padding: 0.2em;
+	margin: 0.2em;
 }
 
 website,username {
