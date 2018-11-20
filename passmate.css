@@ -1,9 +1,25 @@
-@import url("https://use.typekit.net/hld2vds.css");
-@import url('https://fonts.googleapis.com/css?family=Inconsolata:700');
-
 @font-face {
 	font-family: 'copernicus';
-       	src: url('Copernicus-Semibold.woff2') format('woff2');
+	src: url('copernicus-semibold.woff2') format('woff2');
+	font-weight: 600;
+}
+
+@font-face {
+	font-family: 'inconsolata';
+	src: url('inconsolata-bold.woff2') format('woff2');
+	font-weight: 400;
+}
+
+@font-face {
+	font-family: 'proxima-nova';
+	src: url('proxima-nova-regular.woff2') format('woff2');
+	font-weight: 400;
+}
+
+@font-face {
+	font-family: 'proxima-nova';
+	src: url('proxima-nova-semibold.woff2') format('woff2');
+	font-weight: 600;
 }
 
 @page {
@@ -152,7 +168,7 @@ recovery {
 
 	border-bottom: black 1px dotted;
 
-	font-family: 'Inconsolata';
+	font-family: 'inconsolata';
 	font-weight: 700;
 	font-size: 1.5em;
 
@@ -182,7 +198,7 @@ passwordLabel,websiteLabel,usernameLabel {
 
 password {
 	display: block;
-	font-family: 'Inconsolata';
+	font-family: 'inconsolata';
 	font-weight: 700;
 }
 
