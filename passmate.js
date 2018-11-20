@@ -45,6 +45,7 @@ class PassMate {
 		this.addElement('h1', overview, 'PassMate');
 		this.addElement('h2', overview, 'Your Personal Password Book');
 		this.addElement('blurb', overview, 'This website generates unique, secure, random passwords locally on your computer every time you load it. It organizes those passwords into book form, printable at home, with space for a website address and username with each password. When asked to choose a password for a new account, the book\'s owner uses a fresh one from the book, reducing password reuse and thwarting credential stuffing attacks.');
+		this.addElement('blurb', overview, 'Technologically savvy, security conscious people frequently make use of password manager to generate and store passwords. Unfortunately, password managers (especially password generators) are still somewhat complex to use, which creates friction and drives many people away. You probably have friends or family who use one or a few simple passwords across all sites. PassMate isn\'t perfect security, but it can help them significantly increase their account security.');
 
 		this.addElement('h2', overview, 'Creating Your Own Book');
 		this.addElement('blurb', overview, 'Who will this book belong to?');
@@ -113,14 +114,16 @@ class PassMate {
 
 		this.addElement('h2', container, 'Creating a new account');
 		this.addElement('blurb', container, 'When a website asks you to choose a password, find the page in this book by the first letter of the website name, then choose the next unused password on the page. Write down the website name and username next to your new password. If the website requires symbols in the password, circle the ?! at the end of the password, and include them when you type it in.');
-
-		this.addElement('h2', container, 'Logging in');
-		this.addElement('blurb', container, 'It\'s not possible for most people to memorize secure, unique passwords for every website they use. Use this book as a reference whenever you log into a website, finding the page by the website name\'s first letter.');
-		this.addElement('blurb', container, 'If there\'s no entry for the website because you used a common password for your account, pick the next unused password from the page in this book, and use the website\'s password change function to switch to the new, secure password. Remember to write down the website name and username once the change is successful!');
+		this.addElement('blurb', container, 'Your web browser may offer to save the password when you type it in. It\'s fine to let it do that. Those passwords are stored securely, and making it easier to use secure passwords makes you more likely to use them everywhere.');
 	}
 
 	addInstructions2(container) {
 		container.setAttribute('data-pagetype', 'instructions');
+
+		this.addElement('h2', container, 'Logging in');
+		this.addElement('blurb', container, 'If your web browser has remembered your secure password from before and offers to enter it for you, let it do so. If not, read on.');
+		this.addElement('blurb', container, 'It\'s not possible for most people to memorize secure, unique passwords for every website they use. Use this book as a reference whenever you log into a website, finding the page by the website name\'s first letter.');
+		this.addElement('blurb', container, 'If there\'s no entry for the website because you used a common password for your account, pick the next unused password from the page in this book, and use the website\'s password change function to switch to the new, secure password. Remember to write down the website name and username once the change is successful!');
 
 		this.addElement('h2', container, 'Reprinting this book');
 		this.addElement('blurb', container, 'Keep a copy of the recovery code below somewhere safe. If you ever lose this book, or if you\'d like to print a new copy with the same passwords, visit passmate.io and enter the recovery code.');
