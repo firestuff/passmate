@@ -24,6 +24,8 @@ class PassMate {
 		this.pages = [];
 		this.passwords = new Map();
 
+		this.addOverview(container);
+
 		this.addPages(container, 26 * 2 + 4);
 		this.addFrontPage(this.pages[1]);
 		this.addInstructions1(this.pages[2]);
@@ -34,10 +36,40 @@ class PassMate {
 			this.PASSWORDS_PER_PAGE);
 
 		this.generateMasterPassword();
-		this.recovery.addEventListener('input', () => {
+		this.onRecoveryChange();
+	}
+
+	addOverview(container) {
+		let overview = this.addElement('overview', container);
+
+		this.addElement('h1', overview, 'PassMate');
+		this.addElement('h2', overview, 'Your Personal Password Book');
+		this.addElement('blurb', overview, 'This website generates unique, secure, random passwords locally on your computer every time you load it. It organizes those passwords into book form, printable at home, with space for a website address and username with each password. When asked to choose a password for a new account, the book\'s owner uses a fresh one from the book, reducing password reuse and thwarting credential stuffing attacks.');
+
+		this.addElement('h2', overview, 'Creating Your Own Book');
+		this.addElement('blurb', overview, 'Who will this book belong to?');
+		this.ownerIn = this.addElement('owner', overview);
+		this.ownerIn.contentEditable = true;
+		this.ownerIn.addEventListener('input', () => {
+			this.ownerOut.innerText = this.ownerIn.innerText;
+		});
+
+		this.addElement('blurb', overview, 'The book needs to be printed two-sided to make sense; you need to use a printer that supports that. The book uses 14 sheets of paper and provides 260 unique passwords, organized into groups of 10 by website name.');
+		let print = this.addElement('blurb', overview, 'You can print the book now by clicking here.');
+		print.style.fontWeight = 'bold';
+		print.style.cursor = 'pointer';
+		print.addEventListener('click', () => {
+			window.print();
+		});
+		this.addElement('blurb', overview, 'Once you\'ve printed the book, fold it in half along the line in the center, with the "PassMate: Personal Password Book" title page facing out. You can bind the book with a rubber band along the fold. There are instructions for use on page 2.');
+
+		this.addElement('h2', overview, 'Reprinting Your Book');
+		this.addElement('blurb', overview, 'A unique code has been generated for you below. It changes every time you refresh this website. If you\'d like to reprint an existing book, change the code below to the one printed on page 3 of your old book. The new book will contain all the same passwords as the old book. This is all done without the code or passwords ever leaving your computer.');
+		this.recoveryIn = this.addElement('recovery', overview);
+		this.recoveryIn.contentEditable = true;
+		this.recoveryIn.addEventListener('input', () => {
 			this.onRecoveryChange();
 		});
-		this.onRecoveryChange();
 	}
 
 	addPages(container, numPages) {
@@ -69,15 +101,14 @@ class PassMate {
 		container.setAttribute('data-pagetype', 'front');
 		this.addElement('h1', container, 'PassMate');
 		this.addElement('h2', container, 'Personal Password Book');
-		let owner = this.addElement('owner', container);
-		owner.contentEditable = true;
+		this.ownerOut = this.addElement('owner', container);
 	}
 
 	addInstructions1(container) {
 		container.setAttribute('data-pagetype', 'instructions');
 
 		this.addElement('h2', container, 'Welcome to PassMate');
-		this.addElement('blurb', container, 'When hackers break into websites, they often steal the passwords of every user of the site. When people use similar passwords across websites, or simple passwords that are used by others, your security is only as good as the least secure website you use. Security experts consider this a much greater threat than writing passwords down on paper.');
+		this.addElement('blurb', container, 'When hackers break into websites, they often steal the passwords of every user of the site. When you use similar passwords across websites, or simple passwords that are used by others, your security is only as good as the least secure website you use. Security experts consider this a greater threat than writing passwords down on paper.');
 		this.addElement('blurb', container, 'PassMate makes it easier to use unique, strong passwords for each website. This book is generated just for you, with high-security passwords that are different for each person. The passwords are never sent to PassMate.');
 
 		this.addElement('h2', container, 'Creating a new account');
@@ -93,8 +124,7 @@ class PassMate {
 
 		this.addElement('h2', container, 'Reprinting this book');
 		this.addElement('blurb', container, 'Keep a copy of the recovery code below somewhere safe. If you ever lose this book, or if you\'d like to print a new copy with the same passwords, visit passmate.io and enter the recovery code.');
-		this.recovery = this.addElement('recovery', container);
-		this.recovery.contentEditable = true;
+		this.recoveryOut = this.addElement('recovery', container);
 	}
 
 	addPasswordPages(pages, pagesPerLetter, passwordsPerPage) {
@@ -152,18 +182,19 @@ class PassMate {
 	}
 
 	generateMasterPassword() {
-		if (this.recovery.innerText != '') {
+		if (this.recoveryIn.innerText != '') {
 			return;
 		}
 		let masterPassword = this.generatePassword(
 			this.MASTER_PASSWORD_LENGTH,
 			crypto.getRandomValues(new Uint8Array(this.MASTER_PASSWORD_LENGTH * this.OVERSAMPLE)));
-		this.recovery.innerText = this.SAFE_ALPHANUM.charAt(this.VERSION) + masterPassword;
+		this.recoveryIn.innerText = this.SAFE_ALPHANUM.charAt(this.VERSION) + masterPassword;
 	}
 
 	onRecoveryChange() {
-		let recovery = this.recovery.innerText;
+		let recovery = this.recoveryIn.innerText;
 		if (recovery.charAt(0) == 'A') {
+			this.recoveryOut.innerText = recovery;
 			crypto.subtle.importKey(
 				'raw',
 				this.stringToArray(recovery.slice(1)),
