@@ -71,6 +71,9 @@ class PassMate {
 		this.recoveryIn.addEventListener('input', () => {
 			this.onRecoveryChange();
 		});
+
+		this.addElement('h2', overview, 'Questions? Suggestions?');
+		this.addElement('blurb', overview, 'Contact ian@passmate.io');
 	}
 
 	addPages(container, numPages) {
