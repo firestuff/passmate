@@ -69,7 +69,7 @@ overview {
 }
 
 overview > blurb {
-	max-width: 30em;
+	max-width: 40em;
 }
 
 overview > owner {

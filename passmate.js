@@ -54,7 +54,7 @@ class PassMate {
 			this.ownerOut.innerText = this.ownerIn.innerText;
 		});
 
-		this.addElement('blurb', overview, 'The book needs to be printed two-sided to make sense; you need to use a printer that supports that. The book uses 14 sheets of paper and provides 260 unique passwords, organized into groups of 10 by first letter of website name.');
+		this.addElement('blurb', overview, 'You need a printer that supports printing two-sided for the book to make sense. Print with the following options: Paper size: Letter, Layout/Orientation: Landscape, Two-sided: Long edge (or just enabled). The book uses 14 sheets of paper and provides 260 unique passwords, organized into groups of 10 by first letter of website name.');
 		let print = this.addElement('blurb', overview, 'You can print the book now by clicking here.');
 		print.style.fontWeight = 'bold';
 		print.style.cursor = 'pointer';
