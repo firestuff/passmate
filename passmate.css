@@ -2,24 +2,28 @@
 	font-family: 'copernicus';
 	src: url('copernicus-semibold.woff2') format('woff2');
 	font-weight: 600;
+	font-display: block;
 }
 
 @font-face {
 	font-family: 'inconsolata';
 	src: url('inconsolata-bold.woff2') format('woff2');
 	font-weight: 400;
+	font-display: block;
 }
 
 @font-face {
 	font-family: 'proxima-nova';
 	src: url('proxima-nova-regular.woff2') format('woff2');
 	font-weight: 400;
+	font-display: block;
 }
 
 @font-face {
 	font-family: 'proxima-nova';
 	src: url('proxima-nova-semibold.woff2') format('woff2');
 	font-weight: 600;
+	font-display: block;
 }
 
 @page {
