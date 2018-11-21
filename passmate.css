@@ -67,6 +67,10 @@ overview {
 	margin: 1em;
 }
 
+overview > h2 {
+	margin-top: 1.2em;
+}
+
 overview > blurb {
 	max-width: 40em;
 }
@@ -78,6 +82,7 @@ overview > owner {
 overview > recovery {
 	margin-top: 0;
 	margin-bottom: 1em;
+	font-size: 1.2em;
 }
 
 /**********
