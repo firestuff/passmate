@@ -281,6 +281,12 @@ class PassMate {
 	}
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+function onReady() {
 	new PassMate(document.getElementsByTagName('body')[0]);
-});
+}
+
+if (document.readyState === "loading") {
+	document.addEventListener('DOMContentLoaded', onReady);
+} else {
+	onReady();
+}
