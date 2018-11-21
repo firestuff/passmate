@@ -1,0 +1,8 @@
+{
+  "name": "passmate",
+  "description": "Generate secure, unique password books to print at home",
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "eslint-config-google": "^0.11.0"
+  }
+}

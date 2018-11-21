@@ -88,7 +88,6 @@ class PassMate {
 	}
 
 	addPages(container, numPages) {
-		console.assert(numPages % 4 == 0);
 		let numSheets = numPages / 4;
 		for (let sheetNum = 0; sheetNum < numSheets; ++sheetNum) {
 			let sideNum = sheetNum * 2;
@@ -218,11 +217,9 @@ class PassMate {
 				{name: 'HKDF'},
 				false,
 				['deriveBits'])
-			.then((key) => {
-				this.addDerivedPasswords(key);
-			});
-		} else {
-			console.assert(false, 'Invalid recovery key version:', this.recovery.charAt(0));
+				.then((key) => {
+					this.addDerivedPasswords(key);
+				});
 		}
 	}
 
@@ -242,19 +239,18 @@ class PassMate {
 			},
 			key,
 			this.PASSWORD_LENGTH * this.OVERSAMPLE * 8 /* bits per byte */)
-		.then((bits) => {
-			let password = this.generatePassword(this.PASSWORD_LENGTH, new Uint8Array(bits));
-			if (this.validatePassword(password)) {
-				container.innerText = password;
-			} else {
-				// Keep trying until we get a valid password.
-				this.addDerivedPassword(key, info + 'x', container);
-			}
-		});
+			.then((bits) => {
+				let password = this.generatePassword(this.PASSWORD_LENGTH, new Uint8Array(bits));
+				if (this.validatePassword(password)) {
+					container.innerText = password;
+				} else {
+					// Keep trying until we get a valid password.
+					this.addDerivedPassword(key, info + 'x', container);
+				}
+			});
 	}
 
 	intToSafeChar(i) {
-		console.assert(this.SAFE_ALPHANUM.length < 0x3f);
 		i %= 0x3f;
 		if (i < this.SAFE_ALPHANUM.length) {
 			return [this.SAFE_ALPHANUM[i]];
@@ -285,7 +281,7 @@ function onReady() {
 	new PassMate(document.getElementsByTagName('body')[0]);
 }
 
-if (document.readyState === "loading") {
+if (document.readyState == 'loading') {
 	document.addEventListener('DOMContentLoaded', onReady);
 } else {
 	onReady();
