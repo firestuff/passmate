@@ -68,6 +68,7 @@ class PassMate {
 		this.addElement('blurb', overview, 'A unique code has been generated for you below. It changes every time you refresh this website. If you\'d like to reprint an existing book, change the code below to the one printed on page 3 of your old book. The new book will contain all the same passwords as the old book. This is all done without the code or passwords ever leaving your computer.');
 		this.recoveryIn = this.addElement('recovery', overview);
 		this.recoveryIn.contentEditable = true;
+		this.recoveryIn.spellcheck = false;
 		this.recoveryIn.addEventListener('input', () => {
 			this.onRecoveryChange();
 		});
