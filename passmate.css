@@ -8,7 +8,7 @@
 @font-face {
 	font-family: 'inconsolata';
 	src: url('inconsolata-bold.woff2') format('woff2');
-	font-weight: 400;
+	font-weight: 700;
 	font-display: block;
 }
 
@@ -110,7 +110,6 @@ overview ol > li {
  * Print
  **********/
 side {
-	page-break-before: always;
 	page-break-inside: avoid;
 
 	width: 100%;
@@ -207,7 +206,7 @@ recovery {
 passwordBlock {
 	display: grid;
 	margin-bottom: 1.5em;
-	font-size: 1.5em;
+	font-size: 1.4em;
 
 	grid-template:
 		[password-start] "passwordLabel password" [password-end]
@@ -226,6 +225,7 @@ password {
 	display: block;
 	font-family: 'inconsolata';
 	font-weight: 700;
+	font-size: 1.1em;
 }
 
 passwordSymbols {
