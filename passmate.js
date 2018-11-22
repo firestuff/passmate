@@ -48,21 +48,35 @@ class PassMate {
 		this.addElement('blurb', overview, 'Technologically savvy, security conscious people frequently make use of password manager to generate and store passwords. Unfortunately, password managers (especially password generators) are still somewhat complex to use, which creates friction and drives many people away. You probably have friends or family who use one or a few simple passwords across all sites. PassMate isn\'t perfect security, but it can help them significantly increase their account security.');
 
 		this.addElement('h2', overview, 'Creating Your Own Book');
-		this.addElement('blurb', overview, 'Who will this book belong to?');
-		this.ownerIn = this.addElement('owner', overview);
+
+		let instr = this.addElement('ol', overview);
+
+		let step1 = this.addElement('li', instr);
+		this.addElement('blurb', step1, 'Who will this book belong to?');
+		this.ownerIn = this.addElement('owner', step1);
 		this.ownerIn.contentEditable = true;
 		this.ownerIn.addEventListener('input', () => {
 			this.ownerOut.innerText = this.ownerIn.innerText;
 		});
 
-		this.addElement('blurb', overview, 'You need a printer that supports printing two-sided for the book to make sense. Print with the following options: Paper size: Letter, Layout/Orientation: Landscape, Two-sided: Long edge (or just enabled). The book uses 14 sheets of paper and provides 260 unique passwords, organized into groups of 10 by first letter of website name.');
-		let print = this.addElement('blurb', overview, 'You can print the book now by clicking here.');
-		print.style.fontWeight = 'bold';
-		print.style.cursor = 'pointer';
-		print.addEventListener('click', () => {
+		let step2 = this.addElement('li', instr, 'Check that your printer supports two-sided printing. You\'ll need to print with the following settings:');
+		let printreqs = this.addElement('ul', step2);
+		this.addElement('li', printreqs, 'Paper size: Letter');
+		this.addElement('li', printreqs, 'Layout/Orientation: Landscape');
+		this.addElement('li', printreqs, 'Two-sided: Long edge (or just enabled)');
+
+		let step3 = this.addElement('li', instr, 'Click here to print the book!');
+		step3.style.fontWeight = 'bold';
+		step3.style.cursor = 'pointer';
+		step3.addEventListener('click', () => {
 			window.print();
 		});
-		this.addElement('blurb', overview, 'Once you\'ve printed the book, fold it in half along the line in the center, with the "PassMate: Personal Password Book" title page facing out. You can bind the book with a rubber band along the fold. There are instructions for use on page 2.');
+
+		this.addElement('li', instr, 'Fold the book in half along the line in the center, with the "PassMate: Personal Password Book" title page facing out.');
+
+		this.addElement('li', instr, 'Bind the book with a rubber band along the fold.');
+
+		this.addElement('li', instr, 'See page 2 of the book for usage instructions.');
 
 		this.addElement('h2', overview, 'Reprinting Your Book');
 		this.addElement('blurb', overview, 'A unique code has been generated for you below. It changes every time you refresh this website. If you\'d like to reprint an existing book, change the code below to the one printed on page 3 of your old book. The new book will contain all the same passwords as the old book. This is all done without the code or passwords ever leaving your computer.');

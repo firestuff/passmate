@@ -76,22 +76,34 @@ overview {
 	margin: 1em;
 }
 
-overview > h2 {
+overview h2 {
 	margin-top: 1.2em;
 }
 
-overview > blurb {
+overview blurb {
 	max-width: 40em;
 }
 
-overview > owner {
+overview owner {
+	text-align: left;
 	margin-top: 0;
 }
 
-overview > recovery {
+overview recovery {
 	margin-top: 0;
 	margin-bottom: 1em;
 	font-size: 1.2em;
+}
+
+overview ol {
+	box-sizing: border-box;
+	max-width: 40em;
+	margin: 0;
+	padding-inline-start: 1em;
+}
+
+overview ol > li {
+	margin-bottom: 1em;
 }
 
 /**********
@@ -136,10 +148,10 @@ pagenum {
 	justify-content: flex-end;
 }
 
-page:first-of-type > pagenum {
+page:first-of-type pagenum {
 }
 
-page:last-of-type > pagenum {
+page:last-of-type pagenum {
 	align-self: flex-end;
 }
 
@@ -150,7 +162,7 @@ letter {
 	margin-bottom: 0.2em;
 }
 
-page:last-of-type > letter {
+page:last-of-type letter {
 	align-self: flex-end;
 }
 
