@@ -45,7 +45,7 @@ class PassMate {
 		this.addElement('h1', overview, 'PassMate');
 		this.addElement('h2', overview, 'Your Personal Password Book');
 		this.addElement('blurb', overview, 'This website generates unique, secure, random passwords locally on your computer every time you load it. It organizes those passwords into book form, printable at home, with space for a website address and username with each password. When asked to choose a password for a new account, the book\'s owner uses a fresh one from the book, reducing password reuse and thwarting credential stuffing attacks.');
-		this.addElement('blurb', overview, 'Technologically savvy, security conscious people frequently make use of password manager to generate and store passwords. Unfortunately, password managers (especially password generators) are still somewhat complex to use, which creates friction and drives many people away. You probably have friends or family who use one or a few simple passwords across all sites. PassMate isn\'t perfect security, but it can help them significantly increase their account security.');
+		this.addElement('blurb', overview, 'Technologically savvy, security conscious people frequently make use of password managers to generate and store passwords. Unfortunately, password managers (especially password generators) are still somewhat complex to use, which creates friction and drives many people away. You probably have friends or family who use one or a few simple passwords across all sites. PassMate isn\'t perfect security, but it can help them significantly increase their account security.');
 
 		this.addElement('h2', overview, 'Creating Your Own Book');
 
