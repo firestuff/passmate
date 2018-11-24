@@ -1,5 +1,11 @@
 A6Fe2bnneuTMUNEAVKQpjNQq74BQVG5JB
-	A-0-0: 7kt7QwYL
-	A-0-1: qhqv9Myy
-	A-1-0: MzyhW9Np
-	Z-1-4: 5EQaDfNS
+	Short
+		A-0-0: 7kt7QwYL
+		A-0-1: qhqv9Myy
+		A-1-0: MzyhW9Np
+		Z-1-4: 5EQaDfNS
+	Readable
+		A-0-0: ReactorsHybridElected875
+		A-0-1: OlderOwnerGeneric253
+		A-1-0: SovietKennethAdapted545
+		Z-1-4: DefiniteFounderSnow294
