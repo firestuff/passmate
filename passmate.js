@@ -18,9 +18,6 @@ class PassMate {
 		this.PASSWORDS_PER_PAGE = 5;
 		this.VERSION = 0;
 
-		// how much extra random data to generate, to handle set misses.
-		this.OVERSAMPLE = 4;
-
 		this.pages = [];
 		this.passwords = new Map();
 
@@ -35,7 +32,7 @@ class PassMate {
 			this.PAGES_PER_LETTER,
 			this.PASSWORDS_PER_PAGE);
 
-		this.generateMasterPassword();
+		this.recoveryIn.innerText = this.SAFE_ALPHANUM.charAt(this.VERSION) + this.generateMasterPassword().join('');
 		this.onRecoveryChange();
 	}
 
@@ -182,15 +179,6 @@ class PassMate {
 		}
 	}
 
-	generatePassword(numChars, src) {
-		let ret = [];
-		let srcIndex = 0;
-		while (ret.length < numChars && srcIndex < src.length) {
-			ret.push.apply(ret, this.intToSafeChar(src[srcIndex++]));
-		}
-		return ret.join('');
-	}
-
 	validatePassword(password) {
 		if (password.length < this.PASSWORD_LENGTH) {
 			return false;
@@ -212,26 +200,35 @@ class PassMate {
 		return true;
 	}
 
-	generateMasterPassword() {
+	generatePassword(choices, oversample) {
+		oversample = oversample || 2;
 		if (this.recoveryIn.innerText != '') {
 			return;
 		}
-		let masterPassword = this.generatePassword(
-			this.MASTER_PASSWORD_LENGTH,
-			crypto.getRandomValues(new Uint8Array(this.MASTER_PASSWORD_LENGTH * this.OVERSAMPLE)));
-		this.recoveryIn.innerText = this.SAFE_ALPHANUM.charAt(this.VERSION) + masterPassword;
+		let rand = Array.from(crypto.getRandomValues(new Uint8Array(choices.length * oversample)));
+		let ret = [];
+		for (let choice of choices) {
+			let val = this.choose(choice, rand);
+			if (val === null) {
+				// Ran out of randomness. Try again.
+				return this.generatePassword(choices, oversample * 2);
+			}
+			ret.push(val);
+		}
+		return ret;
+	}
+
+	generateMasterPassword() {
+		let choices = new Array(this.MASTER_PASSWORD_LENGTH);
+		choices.fill(this.SAFE_ALPHANUM);
+		return this.generatePassword(choices);
 	}
 
 	onRecoveryChange() {
 		let recovery = this.recoveryIn.innerText;
 		if (recovery.charAt(0) == 'A') {
 			this.recoveryOut.innerText = recovery;
-			crypto.subtle.importKey(
-				'raw',
-				this.stringToArray(recovery.slice(1)),
-				{name: 'HKDF'},
-				false,
-				['deriveBits'])
+			this.importKey(recovery.slice(1))
 				.then((key) => {
 					this.addDerivedPasswords(key);
 				});
@@ -240,12 +237,75 @@ class PassMate {
 
 	addDerivedPasswords(key) {
 		for (let [info, container] of this.passwords) {
-			this.addDerivedPassword(key, info, container);
+			let choices = new Array(this.PASSWORD_LENGTH);
+			choices.fill(this.SAFE_ALPHANUM);
+			this.deriveValidArray(key, info, choices, this.validatePassword.bind(this))
+				.then((arr) => {
+					container.innerText = arr.join('');
+				});
 		}
 	}
 
-	addDerivedPassword(key, info, container) {
-		crypto.subtle.deriveBits(
+	/**
+	 * @returns {Promise}
+	 */
+	deriveValidArray(key, info, choices, validator) {
+		return new Promise((resolve) => {
+			this.deriveArray(key, info, choices)
+				.then((arr) => {
+					if (validator(arr)) {
+						resolve(arr);
+					} else {
+						// Try again
+						resolve(this.deriveValidArray(key, info + 'x', choices, validator));
+					}
+				});
+		});
+	}
+
+	/**
+	 * @param {CryptoKey} key Master key
+	 * @param {string} info Seed for this generation. The same {key, info} input will generate the same output.
+	 * @param {Array.<string[]>} choices Possible choices for each position in the output string
+	 * @returns {Promise}
+	 */
+	deriveArray(key, info, choices, oversample) {
+		oversample = oversample || 2;
+		return new Promise((resolve) => {
+			this.deriveUint8Array(key, info, choices.length * oversample)
+				.then((rand) => {
+					let ret = [];
+					for (let choice of choices) {
+						let val = this.choose(choice, rand);
+						if (val === null) {
+							// Ran out of randomness. Try again.
+							resolve(this.deriveArray(key, info, choices, oversample * 2));
+						}
+						ret.push(val);
+					}
+					resolve(ret);
+				});
+		});
+	}
+
+	/**
+	 * This yields an Array instead of a Uint8Array because the latter lacks shift()
+	 * @returns {Promise}
+	 */
+	deriveUint8Array(key, info, numBytes) {
+		return new Promise((resolve) => {
+			this.deriveBits(key, info, numBytes * 8)
+				.then((bits) => {
+					resolve(Array.from(new Uint8Array(bits)));
+				});
+		});
+	}
+
+	/**
+	 * @returns {Promise}
+	 */
+	deriveBits(key, info, numBits) {
+		return crypto.subtle.deriveBits(
 			{
 				name: 'HKDF',
 				salt: new ArrayBuffer(),
@@ -253,25 +313,38 @@ class PassMate {
 				hash: {name: 'SHA-256'},
 			},
 			key,
-			this.PASSWORD_LENGTH * this.OVERSAMPLE * 8 /* bits per byte */)
-			.then((bits) => {
-				let password = this.generatePassword(this.PASSWORD_LENGTH, new Uint8Array(bits));
-				if (this.validatePassword(password)) {
-					container.innerText = password;
-				} else {
-					// Keep trying until we get a valid password.
-					this.addDerivedPassword(key, info + 'x', container);
-				}
-			});
+			numBits);
 	}
 
-	intToSafeChar(i) {
-		i %= 0x3f;
-		if (i < this.SAFE_ALPHANUM.length) {
-			return [this.SAFE_ALPHANUM[i]];
-		} else {
-			return [];
+	/**
+	 * @returns {Promise}
+	 */
+	importKey(str) {
+		return crypto.subtle.importKey(
+			'raw',
+			this.stringToArray(str),
+			{name: 'HKDF'},
+			false,
+			['deriveBits']);
+	}
+
+	/**
+	 * Uniform choice between options
+	 * @param {Array} choice
+	 * @param {Array} arr Randomness, consumed by this function
+	 */
+	choose(choice, arr) {
+		let mask = 1;
+		while (mask < choice.length) {
+			mask = (mask << 1) | 1;
 		}
+		while (arr.length) {
+			let rand = arr.shift() & mask;
+			if (rand < choice.length) {
+				return choice[rand];
+			}
+		}
+		return null;
 	}
 
 	stringToArray(str) {
