@@ -31,18 +31,6 @@
 	margin: 0;
 }
 
-@media screen {
-	side {
-		display: none !important;
-	}
-}
-
-@media print {
-	overview {
-		display: none !important;
-	}
-}
-
 html {
 	height: 100%;
 }
@@ -54,194 +42,236 @@ body {
 	height: 100%;
 }
 
-h1 {
-	font-family: 'copernicus';
-	font-weight: 600;
-	align-self: center;
+overview,product {
+	display: none;
 }
 
-h2 {
-	font-family: 'proxima-nova';
-	font-weight: 600;
-	align-self: center;
+@media screen {
+	overview {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin: 1em;
+	}
+
+	h1 {
+		font-family: 'copernicus';
+		font-weight: 600;
+		align-self: center;
+	}
+
+	h2 {
+		font-family: 'proxima-nova';
+		font-weight: 600;
+		align-self: center;
+		margin-top: 1.2em;
+	}
+
+	blurb {
+		text-align: justify;
+		margin-bottom: 1em;
+		max-width: 40em;
+	}
+
+	owner {
+		display: block;
+		width: 11em;
+
+		border-bottom: black 1px dotted;
+
+		font-family: 'proxima-nova';
+		font-weight: 600;
+		font-size: 1.5em;
+
+		text-align: left;
+		align-self: center;
+
+		margin-top: 0;
+		margin-bottom: 1em;
+	}
+
+	recovery {
+		display: block;
+		width: 17em;
+
+		border-bottom: black 1px dotted;
+
+		font-family: 'inconsolata';
+		font-weight: 700;
+		font-size: 1.2em;
+
+		text-align: center;
+		align-self: center;
+
+		margin-top: 0;
+		margin-bottom: 1em;
+	}
+
+	ol {
+		box-sizing: border-box;
+		max-width: 40em;
+		margin: 0;
+		padding-inline-start: 1em;
+	}
+
+	ol > li {
+		margin-bottom: 1em;
+	}
+
+	.selected {
+		font-weight: 600;
+	}
 }
 
-/**********
- * Screen
- **********/
-overview {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin: 1em;
-}
+@media print {
+	product {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
 
-overview h2 {
-	margin-top: 1.2em;
-}
+	h1 {
+		font-family: 'copernicus';
+		font-weight: 600;
+		align-self: center;
+	}
 
-overview blurb {
-	max-width: 40em;
-}
+	h2 {
+		font-family: 'proxima-nova';
+		font-weight: 600;
+		align-self: center;
+	}
 
-overview owner {
-	text-align: left;
-	margin-top: 0;
-}
+	side {
+		page-break-inside: avoid;
 
-overview recovery {
-	margin-top: 0;
-	margin-bottom: 1em;
-	font-size: 1.2em;
-}
+		width: 100%;
+		height: 100%;
 
-overview ol {
-	box-sizing: border-box;
-	max-width: 40em;
-	margin: 0;
-	padding-inline-start: 1em;
-}
+		display: flex;
+		flex-direction: row;
+	}
 
-overview ol > li {
-	margin-bottom: 1em;
-}
+	side:nth-of-type(even) {
+		transform: rotateZ(180deg);
+	}
 
-overview .selected {
-	font-weight: 600;
-}
+	page {
+		flex-basis: 0;
+		flex-grow: 1;
+		flex-shrink: 0;
+		position: relative;
 
-/**********
- * Print
- **********/
-side {
-	page-break-inside: avoid;
+		padding: 1.5em;
 
-	width: 100%;
-	height: 100%;
+		display: flex;
+		flex-direction: column;
+	}
 
-	display: flex;
-	flex-direction: row;
-}
+	page:first-of-type {
+		border-right: 1px black solid;
+	}
 
-side:nth-of-type(even) {
-	transform: rotateZ(180deg);
-}
+	pagenum {
+		order: 99;
+		flex-grow: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+	}
 
-page {
-	flex-basis: 0;
-	flex-grow: 1;
-	flex-shrink: 0;
-	position: relative;
+	page:first-of-type pagenum {
+	}
 
-	padding: 1.5em;
+	page:last-of-type pagenum {
+		align-self: flex-end;
+	}
 
-	display: flex;
-	flex-direction: column;
-}
+	letter {
+		font-family: 'copernicus';
+		font-weight: 600;
+		font-size: 4em;
+		margin-bottom: 0.2em;
+	}
 
-page:first-of-type {
-	border-right: 1px black solid;
-}
+	page:last-of-type letter {
+		align-self: flex-end;
+	}
 
-pagenum {
-	order: 99;
-	flex-grow: 1;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-end;
-}
+	blurb {
+		text-align: justify;
+		margin-bottom: 1em;
+	}
 
-page:first-of-type pagenum {
-}
+	owner {
+		display: block;
+		width: 11em;
 
-page:last-of-type pagenum {
-	align-self: flex-end;
-}
+		border-bottom: black 1px dotted;
 
-letter {
-	font-family: 'copernicus';
-	font-weight: 600;
-	font-size: 4em;
-	margin-bottom: 0.2em;
-}
+		font-family: 'proxima-nova';
+		font-weight: 600;
+		font-size: 1.5em;
 
-page:last-of-type letter {
-	align-self: flex-end;
-}
+		text-align: center;
+		align-self: center;
 
-blurb {
-	text-align: justify;
-	margin-bottom: 1em;
-}
+		margin-top: 1em;
+		margin-bottom: 1em;
+	}
 
-owner {
-	display: block;
-	width: 11em;
+	recovery {
+		display: block;
+		width: 17em;
 
-	border-bottom: black 1px dotted;
+		border-bottom: black 1px dotted;
 
-	font-family: 'proxima-nova';
-	font-weight: 600;
-	font-size: 1.5em;
+		font-family: 'inconsolata';
+		font-weight: 700;
+		font-size: 1.5em;
 
-	text-align: center;
-	align-self: center;
+		text-align: center;
+		align-self: center;
 
-	margin-top: 1em;
-	margin-bottom: 1em;
-}
+		margin-top: 1em;
+	}
 
-recovery {
-	display: block;
-	width: 17em;
+	passwordBlock {
+		display: grid;
+		margin-bottom: 1.5em;
+		font-size: 1.4em;
 
-	border-bottom: black 1px dotted;
+		grid-template:
+			[password-start] "passwordLabel password" [password-end]
+			[website-start] "websiteLabel website" [website-end]
+			[username-start] "usernameLabel username" [username-end];
+		grid-template-columns: 5em auto;
+		grid-column-gap: 0.5em;
+		grid-row-gap: 0.2em;
+	}
 
-	font-family: 'inconsolata';
-	font-weight: 700;
-	font-size: 1.5em;
+	passwordLabel,websiteLabel,usernameLabel {
+		text-align: right;
+	}
 
-	text-align: center;
-	align-self: center;
+	password {
+		display: block;
+		font-family: 'inconsolata';
+		font-weight: 700;
+		font-size: 1.1em;
+	}
 
-	margin-top: 1em;
-}
+	passwordSymbols {
+		color: darkgrey;
+		border: 1px darkgrey dotted;
+		border-radius: 1em;
+		padding: 0.2em;
+		margin: 0.2em;
+	}
 
-passwordBlock {
-	display: grid;
-	margin-bottom: 1.5em;
-	font-size: 1.4em;
-
-	grid-template:
-		[password-start] "passwordLabel password" [password-end]
-		[website-start] "websiteLabel website" [website-end]
-		[username-start] "usernameLabel username" [username-end];
-	grid-template-columns: 5em auto;
-	grid-column-gap: 0.5em;
-	grid-row-gap: 0.2em;
-}
-
-passwordLabel,websiteLabel,usernameLabel {
-	text-align: right;
-}
-
-password {
-	display: block;
-	font-family: 'inconsolata';
-	font-weight: 700;
-	font-size: 1.1em;
-}
-
-passwordSymbols {
-	color: darkgrey;
-	border: 1px darkgrey dotted;
-	border-radius: 1em;
-	padding: 0.2em;
-	margin: 0.2em;
-}
-
-website,username {
-	width: 100%;
-	border-bottom: black 1px dotted;
-	margin-bottom: 0.17em;
+	website,username {
+		width: 100%;
+		border-bottom: black 1px dotted;
+		margin-bottom: 0.17em;
+	}
 }

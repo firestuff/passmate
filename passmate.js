@@ -23,14 +23,7 @@ class PassMate {
 
 		this.addOverview(container);
 
-		this.addPages(container, 26 * 2 + 4);
-		this.addFrontPage(this.pages[1]);
-		this.addInstructions1(this.pages[2]);
-		this.addInstructions2(this.pages[3]);
-		this.addPasswordPages(
-			this.pages.slice(4, 4 + (26 * this.PAGES_PER_LETTER)),
-			this.PAGES_PER_LETTER,
-			this.PASSWORDS_PER_PAGE);
+		this.addProduct(container);
 
 		this.recoveryIn.innerText = this.SAFE_ALPHANUM.charAt(this.VERSION) + this.generateMasterPassword().join('');
 		this.derivePasswords();
@@ -116,6 +109,18 @@ class PassMate {
 		github.addEventListener('click', () => {
 			document.location = 'https://github.com/flamingcowtv/passmate';
 		});
+	}
+
+	addProduct(container) {
+		let product = this.addElement('product', container);
+		this.addPages(product, 26 * 2 + 4);
+		this.addFrontPage(this.pages[1]);
+		this.addInstructions1(this.pages[2]);
+		this.addInstructions2(this.pages[3]);
+		this.addPasswordPages(
+			this.pages.slice(4, 4 + (26 * this.PAGES_PER_LETTER)),
+			this.PAGES_PER_LETTER,
+			this.PASSWORDS_PER_PAGE);
 	}
 
 	addPages(container, numPages) {
