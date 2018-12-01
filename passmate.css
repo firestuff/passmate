@@ -73,6 +73,13 @@ overview,product {
 		max-width: 40em;
 	}
 
+	a {
+		margin-bottom: 1em;
+		max-width: 40em;
+		text-decoration: none;
+		color: black;
+	}
+
 	owner {
 		display: block;
 		width: 11em;

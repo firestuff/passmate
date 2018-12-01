@@ -98,17 +98,11 @@ class PassMate {
 
 		this.addElement('h2', overview, 'Questions? Suggestions?');
 
-		let contact = this.addElement('blurb', overview, 'Contact ian@passmate.io');
-		contact.style.cursor = 'pointer';
-		contact.addEventListener('click', () => {
-			document.location = 'mailto:ian@passmate.io';
-		});
+		let contact = this.addElement('a', overview, 'Contact ian@passmate.io');
+		contact.href = 'mailto:ian@passmate.io';
 
-		let github = this.addElement('blurb', overview, 'Source code & issue tracking at GitHub');
-		github.style.cursor = 'pointer';
-		github.addEventListener('click', () => {
-			document.location = 'https://github.com/flamingcowtv/passmate';
-		});
+		let github = this.addElement('a', overview, 'Source code & issue tracking at GitHub');
+		github.href = 'https://github.com/flamingcowtv/passmate';
 	}
 
 	addProduct(container) {
