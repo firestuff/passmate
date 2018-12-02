@@ -25,7 +25,7 @@ class PassMate {
 
 		this.addProduct(container);
 
-		this.recoveryIn.innerText = this.SAFE_ALPHANUM.charAt(this.VERSION) + this.generateMasterPassword().join('');
+		this.recoveryIn.value = this.SAFE_ALPHANUM.charAt(this.VERSION) + this.generateMasterPassword().join('');
 		this.derivePasswords();
 	}
 
@@ -43,15 +43,11 @@ class PassMate {
 
 		let ownerStep = this.addElement('li', instr);
 		this.addElement('blurb', ownerStep, 'Who will this book belong to?');
-		this.ownerIn = this.addElement('owner', ownerStep);
-		this.ownerIn.contentEditable = true;
-		this.ownerIn.addEventListener('input', () => {
-			if (this.ownerIn.childNodes.length > 1 ||
-				(this.ownerIn.childNodes.length == 1 &&
-				 this.ownerIn.firstChild.nodeType != Node.TEXT_NODE)) {
-				this.ownerIn.innerText = this.ownerIn.innerText;
-			}
-			this.ownerOut.innerText = this.ownerIn.innerText;
+		this.ownerIn = this.addElement('input', ownerStep);
+		this.ownerIn.type = 'text';
+		this.ownerIn.classList.add('owner');
+		this.ownerIn.addEventListener('change', () => {
+			this.ownerOut.innerText = this.ownerIn.value;
 		});
 
 		let formatStep = this.addElement('li', instr, 'Choose your preferred password format (both provide approximately the same security):');
@@ -84,15 +80,12 @@ class PassMate {
 
 		this.addElement('h2', overview, 'Reprinting Your Book');
 		this.addElement('blurb', overview, 'A unique code has been generated for you below. It changes every time you refresh this website. If you\'d like to reprint an existing book, change the code below to the one printed on page 3 of your old book. The new book will contain all the same passwords as the old book. This is all done without the code or passwords ever leaving your computer.');
-		this.recoveryIn = this.addElement('recovery', overview);
-		this.recoveryIn.contentEditable = true;
+
+		this.recoveryIn = this.addElement('input', overview);
+		this.recoveryIn.type = 'text';
+		this.recoveryIn.classList.add('recovery');
 		this.recoveryIn.spellcheck = false;
 		this.recoveryIn.addEventListener('input', () => {
-			if (this.recoveryIn.childNodes.length > 1 ||
-				(this.recoveryIn.childNodes.length == 1 &&
-				 this.recoveryIn.firstChild.nodeType != Node.TEXT_NODE)) {
-				this.recoveryIn.innerText = this.recoveryIn.innerText;
-			}
 			this.derivePasswords();
 		});
 
@@ -222,7 +215,7 @@ class PassMate {
 
 	generatePassword(choices, oversample) {
 		oversample = oversample || 4;
-		if (this.recoveryIn.innerText != '') {
+		if (this.recoveryIn.value != '') {
 			return;
 		}
 		let rand = Array.from(crypto.getRandomValues(new Uint8Array(choices.length * oversample)));
@@ -245,7 +238,7 @@ class PassMate {
 	}
 
 	derivePasswords() {
-		let recovery = this.recoveryIn.innerText;
+		let recovery = this.recoveryIn.value;
 		if (recovery.charAt(0) == 'A') {
 			this.recoveryOut.innerText = recovery;
 			this.importKey(recovery.slice(1))

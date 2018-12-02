@@ -80,38 +80,36 @@ overview,product {
 		color: black;
 	}
 
-	owner {
+	input {
 		display: block;
-		width: 11em;
 
+		border: 0;
 		border-bottom: black 1px dotted;
-
-		font-family: 'proxima-nova';
-		font-weight: 600;
-		font-size: 1.5em;
-
-		text-align: left;
-		align-self: center;
 
 		margin-top: 0;
 		margin-bottom: 1em;
 	}
 
-	recovery {
-		display: block;
-		width: 17em;
+	input:focus {
+		outline: none;
+	}
 
-		border-bottom: black 1px dotted;
+	input.owner {
+		width: 11em;
+
+		font-family: 'proxima-nova';
+		font-weight: 600;
+		font-size: 1.5em;
+	}
+
+	input.recovery {
+		width: 17em;
 
 		font-family: 'inconsolata';
 		font-weight: 700;
 		font-size: 1.2em;
 
 		text-align: center;
-		align-self: center;
-
-		margin-top: 0;
-		margin-bottom: 1em;
 	}
 
 	ol {
