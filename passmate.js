@@ -65,9 +65,8 @@ class PassMate {
 		this.addElement('li', printreqs, 'Layout/Orientation: Landscape');
 		this.addElement('li', printreqs, 'Two-sided: Long edge (or just enabled)');
 
-		let printStep = this.addElement('li', instr, 'Click here to print the book!');
-		printStep.style.fontWeight = 'bold';
-		printStep.style.cursor = 'pointer';
+		let printStep = this.addElement('li', instr);
+		let print = this.addElement('button', printStep, 'Click here to print the book!');
 		printStep.addEventListener('click', () => {
 			window.print();
 		});
