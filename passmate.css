@@ -78,7 +78,7 @@ overview,product {
 
 	a {
 		margin-bottom: 1em;
-		padding: 0.2em;
+		padding: 0.1em;
 		max-width: 40em;
 		text-decoration: none;
 		color: black;
@@ -93,7 +93,7 @@ overview,product {
 		margin-top: 0.2em;
 		margin-bottom: 0.2em;
 
-		padding: 0.2em;
+		padding: 0.1em;
 	}
 
 	input:focus {
@@ -118,17 +118,29 @@ overview,product {
 		text-align: center;
 	}
 
+	label.recovery {
+		text-align: center;
+	}
+
 	button {
 		/* ugly hack to give the focus box breathing room without moving the text */
 		position: relative;
-		left: -0.2em;
-		padding: 0.2em;
+		left: -0.1em;
+		padding: 0.1em;
 
 		border: none;
 		background: none;
 
 		font-family: inherit;
 		font-size: inherit;
+		font-weight: bold;
+	}
+
+	button.selectable {
+		font-weight: normal;
+	}
+
+	button.selected {
 		font-weight: bold;
 	}
 

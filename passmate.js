@@ -52,12 +52,15 @@ class PassMate {
 
 		let formatStep = this.addElement('li', instr, 'Choose your preferred password format (both provide approximately the same security):');
 		let formats = this.addElement('ul', formatStep);
-		this.format = new Select();
-		this.format.add('short', this.addElement('li', formats, 'Short: 5EQaDfNS'));
-		this.format.add('readable', this.addElement('li', formats, 'Readable: LeasedBarneyPlays565'));
-		formats.addEventListener('click', () => {
+		this.format = new Select(() => {
 			this.derivePasswords();
 		});
+
+		let shortItem = this.addElement('li', formats);
+		this.format.add('short', this.addElement('button', shortItem, 'Short: 5EQaDfNS'));
+
+		let readableItem = this.addElement('li', formats);
+		this.format.add('readable', this.addElement('button', readableItem, 'Readable: LeasedBarneyPlays565'));
 
 		let printReqStep = this.addElement('li', instr, 'Check that your printer supports two-sided printing. You\'ll need to print with the following settings:');
 		let printreqs = this.addElement('ul', printReqStep);
@@ -81,6 +84,7 @@ class PassMate {
 		this.addElement('blurb', overview, 'A unique code has been generated for you below. It changes every time you refresh this website. If you\'d like to reprint an existing book, change the code below to the one printed on page 3 of your old book. The new book will contain all the same passwords as the old book. This is all done without the code or passwords ever leaving your computer.');
 
 		let recoveryLabel = this.addElement('label', overview, 'Recovery Code');
+		recoveryLabel.classList.add('recovery');
 		this.recoveryIn = this.addElement('input', recoveryLabel);
 		this.recoveryIn.type = 'text';
 		this.recoveryIn.classList.add('recovery');
@@ -390,9 +394,10 @@ class PassMate {
 }
 
 class Select {
-	constructor() {
+	constructor(changeCallback) {
 		this.options = [];
 		this.selected = null;
+		this.changeCallback = changeCallback;
 	}
 
 	add(key, elem) {
@@ -406,6 +411,9 @@ class Select {
 			}
 			elem.classList.add('selected');
 			this.selected = key;
+			if (this.changeCallback) {
+				this.changeCallback();
+			}
 		});
 
 		if (this.options.length == 1) {
