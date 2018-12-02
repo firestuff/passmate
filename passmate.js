@@ -42,8 +42,8 @@ class PassMate {
 		let instr = this.addElement('ol', overview);
 
 		let ownerStep = this.addElement('li', instr);
-		this.addElement('blurb', ownerStep, 'Who will this book belong to?');
-		this.ownerIn = this.addElement('input', ownerStep);
+		let ownerLabel = this.addElement('label', ownerStep, 'Who will this book belong to?');
+		this.ownerIn = this.addElement('input', ownerLabel);
 		this.ownerIn.type = 'text';
 		this.ownerIn.classList.add('owner');
 		this.ownerIn.addEventListener('change', () => {
@@ -80,7 +80,8 @@ class PassMate {
 		this.addElement('h2', overview, 'Reprinting Your Book');
 		this.addElement('blurb', overview, 'A unique code has been generated for you below. It changes every time you refresh this website. If you\'d like to reprint an existing book, change the code below to the one printed on page 3 of your old book. The new book will contain all the same passwords as the old book. This is all done without the code or passwords ever leaving your computer.');
 
-		this.recoveryIn = this.addElement('input', overview);
+		let recoveryLabel = this.addElement('label', overview, 'Recovery Code');
+		this.recoveryIn = this.addElement('input', recoveryLabel);
 		this.recoveryIn.type = 'text';
 		this.recoveryIn.classList.add('recovery');
 		this.recoveryIn.spellcheck = false;

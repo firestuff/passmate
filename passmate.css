@@ -40,13 +40,16 @@ body {
 	font-family: 'proxima-nova';
 	font-weight: 400;
 	height: 100%;
+
+	color: black;
+	background-color: white;
 }
 
 overview,product {
 	display: none;
 }
 
-@media screen {
+@media screen, speech {
 	overview {
 		display: flex;
 		flex-direction: column;
