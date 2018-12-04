@@ -323,6 +323,18 @@ overview,product {
 		font-size: 1.1em;
 	}
 
+	passwordAlphaNum,passwordWords {
+		display: none;
+	}
+
+	product.passwords-short passwordAlphaNum {
+		display: inline;
+	}
+
+	product.passwords-readable passwordWords {
+		display: inline;
+	}
+
 	passwordSymbols {
 		color: darkgrey;
 		border: 1px darkgrey dotted;

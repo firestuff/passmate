@@ -19,11 +19,12 @@ class PassMate {
 		this.VERSION = 0;
 
 		this.pages = [];
-		this.passwords = new Map();
-
-		this.addOverview(container);
+		this.shortPasswords = new Map();
+		this.readablePasswords = new Map();
 
 		this.addProduct(container);
+
+		this.addOverview(container);
 
 		this.recoveryIn.value = this.SAFE_ALPHANUM.charAt(this.VERSION) + this.generateMasterPassword().join('');
 		this.derivePasswords();
@@ -52,15 +53,17 @@ class PassMate {
 
 		let formatStep = this.addElement('li', instr, 'Choose your preferred password format (both provide approximately the same security):');
 		let formats = this.addElement('ul', formatStep);
-		this.format = new Select(() => {
-			this.derivePasswords();
+		let format = new Select((key) => {
+			this.product.classList.remove('passwords-short');
+			this.product.classList.remove('passwords-readable');
+			this.product.classList.add('passwords-' + key);
 		});
 
 		let shortItem = this.addElement('li', formats);
-		this.format.add('short', this.addElement('button', shortItem, 'Short: 5EQaDfNS'));
+		format.add('short', this.addElement('button', shortItem, 'Short: 5EQaDfNS'));
 
 		let readableItem = this.addElement('li', formats);
-		this.format.add('readable', this.addElement('button', readableItem, 'Readable: LeasedBarneyPlays565'));
+		format.add('readable', this.addElement('button', readableItem, 'Readable: LeasedBarneyPlays565'));
 
 		let printReqStep = this.addElement('li', instr, 'Check that your printer supports two-sided printing. You\'ll need to print with the following settings:');
 		let printreqs = this.addElement('ul', printReqStep);
@@ -103,8 +106,8 @@ class PassMate {
 	}
 
 	addProduct(container) {
-		let product = this.addElement('product', container);
-		this.addPages(product, 26 * 2 + 4);
+		this.product = this.addElement('product', container);
+		this.addPages(this.product, 26 * 2 + 4);
 		this.addFrontPage(this.pages[1]);
 		this.addInstructions1(this.pages[2]);
 		this.addInstructions2(this.pages[3]);
@@ -174,9 +177,12 @@ class PassMate {
 
 				let password = this.addElement('password', pwblock);
 				password.style.gridArea = 'password';
-				this.passwords.set(
+				this.shortPasswords.set(
 					letter + '-' + (i % pagesPerLetter).toString() + '-' + j.toString(),
 					this.addElement('passwordAlphaNum', password));
+				this.readablePasswords.set(
+					letter + '-' + (i % pagesPerLetter).toString() + '-' + j.toString(),
+					this.addElement('passwordWords', password));
 				this.addElement('passwordSymbols', password, this.SAFE_SYMBOL);
 
 				this.addElement('websiteLabel', pwblock, 'Website:').style.gridArea = 'websiteLabel';
@@ -246,16 +252,19 @@ class PassMate {
 	}
 
 	addDerivedPasswords(key) {
-		for (let [info, container] of this.passwords) {
-			let choices;
-			if (this.format.selected == 'short') {
-				choices = new Array(8);
-				choices.fill(this.SAFE_ALPHANUM);
-			} else if (this.format.selected == 'readable') {
-				choices = new Array(6);
-				choices.fill(this.WORDS, 0, 3);
-				choices.fill(this.SAFE_NUM, 3, 6);
-			}
+		for (let [info, container] of this.shortPasswords) {
+			let choices = new Array(8);
+			choices.fill(this.SAFE_ALPHANUM);
+			this.deriveValidArray(key, info, choices, this.validatePassword.bind(this))
+				.then((arr) => {
+					container.innerText = arr.join('');
+				});
+		}
+
+		for (let [info, container] of this.readablePasswords) {
+			let choices = new Array(6);
+			choices.fill(this.WORDS, 0, 3);
+			choices.fill(this.SAFE_NUM, 3, 6);
 			this.deriveValidArray(key, info, choices, this.validatePassword.bind(this))
 				.then((arr) => {
 					container.innerText = arr.join('');
@@ -389,7 +398,6 @@ class PassMate {
 class Select {
 	constructor(changeCallback) {
 		this.options = [];
-		this.selected = null;
 		this.changeCallback = changeCallback;
 	}
 
@@ -403,15 +411,12 @@ class Select {
 				option.classList.remove('selected');
 			}
 			elem.classList.add('selected');
-			this.selected = key;
-			if (this.changeCallback) {
-				this.changeCallback();
-			}
+			this.changeCallback(key);
 		});
 
 		if (this.options.length == 1) {
 			elem.classList.add('selected');
-			this.selected = key;
+			this.changeCallback(key);
 		}
 	}
 }
