@@ -115,24 +115,17 @@ class PassMate {
 	}
 
 	addPages(container, numPages) {
-		let numSheets = numPages / 4;
-		for (let sheetNum = 0; sheetNum < numSheets; ++sheetNum) {
-			let sideNum = sheetNum * 2;
-			container.appendChild(this.buildSide(numPages - sideNum, sideNum + 1));
-			++sideNum;
-			container.appendChild(this.buildSide(sideNum + 1, numPages - sideNum));
+		let firstHalfEnd = Math.ceil(numPages / 2);
+		for (let pageNum = 1; pageNum < numPages; ++pageNum) {
+			let page = this.buildPage(pageNum);
+			page.setAttribute('data-half', pageNum <= firstHalfEnd ? 'first' : 'second');
+			container.appendChild(page);
 		}
-	}
-
-	buildSide(pageNumL, pageNumR) {
-		let side = document.createElement('side');
-		side.appendChild(this.buildPage(pageNumL));
-		side.appendChild(this.buildPage(pageNumR));
-		return side;
 	}
 
 	buildPage(pageNum) {
 		let page = document.createElement('page');
+		page.style.gridArea = 'page' + pageNum;
 		this.addElement('pagenum', page, pageNum);
 		this.pages[pageNum] = page;
 		return page;

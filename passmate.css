@@ -168,9 +168,39 @@ overview,product {
 
 @media print {
 	product {
-		display: block;
+		display: grid;
 		width: 100%;
 		height: 100%;
+		grid-template:
+			[side1-start] "page56 page1" 100% [side1-end]
+			[side2-start] "page55 page2" 100% [side2-end]
+			[side3-start] "page54 page3" 100% [side3-end]
+			[side4-start] "page53 page4" 100% [side4-end]
+			[side5-start] "page52 page5" 100% [side5-end]
+			[side6-start] "page51 page6" 100% [side6-end]
+			[side7-start] "page50 page7" 100% [side7-end]
+			[side8-start] "page49 page8" 100% [side8-end]
+			[side9-start] "page48 page9" 100% [side9-end]
+			[side10-start] "page47 page10" 100% [side10-end]
+			[side11-start] "page46 page11" 100% [side11-end]
+			[side12-start] "page45 page12" 100% [side12-end]
+			[side13-start] "page44 page13" 100% [side13-end]
+			[side14-start] "page43 page14" 100% [side14-end]
+			[side15-start] "page42 page15" 100% [side15-end]
+			[side16-start] "page41 page16" 100% [side16-end]
+			[side17-start] "page40 page17" 100% [side17-end]
+			[side18-start] "page39 page18" 100% [side18-end]
+			[side19-start] "page38 page19" 100% [side19-end]
+			[side20-start] "page37 page20" 100% [side20-end]
+			[side21-start] "page36 page21" 100% [side21-end]
+			[side22-start] "page35 page22" 100% [side22-end]
+			[side23-start] "page34 page23" 100% [side23-end]
+			[side24-start] "page33 page24" 100% [side24-end]
+			[side25-start] "page32 page25" 100% [side25-end]
+			[side26-start] "page31 page26" 100% [side26-end]
+			[side27-start] "page30 page27" 100% [side27-end]
+			[side28-start] "page29 page28" 100% [side28-end]
+			/ 50% 50%;
 	}
 
 	h1 {
@@ -185,34 +215,26 @@ overview,product {
 		align-self: center;
 	}
 
-	side {
+	page {
 		page-break-inside: avoid;
 
-		width: 100%;
-		height: 100%;
-
-		display: flex;
-		flex-direction: row;
-	}
-
-	side:nth-of-type(even) {
-		transform: rotateZ(180deg);
-	}
-
-	page {
-		flex-basis: 0;
-		flex-grow: 1;
-		flex-shrink: 0;
 		position: relative;
-
 		padding: 1.5em;
 
 		display: flex;
 		flex-direction: column;
 	}
 
-	page:first-of-type {
-		border-right: 1px black solid;
+	page[data-half="first"]:nth-of-type(2n) {
+		transform: rotateZ(180deg);
+	}
+
+	page[data-half="second"]:nth-of-type(2n+1) {
+		transform: rotateZ(180deg);
+	}
+
+	page:nth-of-type(2n+1) {
+		border-left: 1px black solid;
 	}
 
 	pagenum {
@@ -223,10 +245,7 @@ overview,product {
 		justify-content: flex-end;
 	}
 
-	page:first-of-type pagenum {
-	}
-
-	page:last-of-type pagenum {
+	page:nth-of-type(2n+1) pagenum {
 		align-self: flex-end;
 	}
 
@@ -237,7 +256,7 @@ overview,product {
 		margin-bottom: 0.2em;
 	}
 
-	page:last-of-type letter {
+	page:nth-of-type(2n+1) letter {
 		align-self: flex-end;
 	}
 
