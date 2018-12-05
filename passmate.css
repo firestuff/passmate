@@ -270,6 +270,18 @@ overview,product {
 		margin-bottom: 1em;
 	}
 
+	blurb.index-letters,blurb.index-none {
+		display: none;
+	}
+
+	product.index-letters blurb.index-letters {
+		display: block;
+	}
+
+	product.index-none blurb.index-none {
+		display: block;
+	}
+
 	owner {
 		display: block;
 		width: 11em;
