@@ -250,6 +250,11 @@ overview,product {
 	}
 
 	letter {
+		display: none;
+	}
+
+	product.index-letters letter {
+		display: block;
 		font-family: 'copernicus';
 		font-weight: 600;
 		font-size: 4em;
@@ -310,6 +315,10 @@ overview,product {
 		grid-template-columns: 5em auto;
 		grid-column-gap: 0.5em;
 		grid-row-gap: 0.2em;
+	}
+
+	product.index-letters passwordBlock:nth-of-type(6) {
+		display: none;
 	}
 
 	passwordLabel,websiteLabel,usernameLabel {

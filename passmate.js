@@ -15,7 +15,7 @@ class PassMate {
 
 		this.MASTER_PASSWORD_LENGTH = 32;
 		this.PAGES_PER_LETTER = 2;
-		this.PASSWORDS_PER_PAGE = 5;
+		this.PASSWORDS_PER_PAGE = 6;
 		this.VERSION = 0;
 
 		this.pages = [];
@@ -58,12 +58,22 @@ class PassMate {
 			this.product.classList.remove('passwords-readable');
 			this.product.classList.add('passwords-' + key);
 		});
-
 		let shortItem = this.addElement('li', formats);
 		format.add('short', this.addElement('button', shortItem, 'Short: 5EQaDfNS'));
-
 		let readableItem = this.addElement('li', formats);
 		format.add('readable', this.addElement('button', readableItem, 'Readable: LeasedBarneyPlays565'));
+
+		let indexStep = this.addElement('li', instr, 'Choose your preferred index format:');
+		let indexes = this.addElement('ul', indexStep);
+		let index = new Select((key) => {
+			this.product.classList.remove('index-letters');
+			this.product.classList.remove('index-none');
+			this.product.classList.add('index-' + key);
+		});
+		let indexLettersItem = this.addElement('li', indexes);
+		index.add('letters', this.addElement('button', indexLettersItem, 'Letters: Look up by website name, A-Z'));
+		let indexNoneItem = this.addElement('li', indexes);
+		index.add('none', this.addElement('button', indexNoneItem, 'None: Use passwords from the beginning'));
 
 		let printReqStep = this.addElement('li', instr, 'Check that your printer supports two-sided printing. You\'ll need to print with the following settings:');
 		let printreqs = this.addElement('ul', printReqStep);
@@ -73,6 +83,7 @@ class PassMate {
 
 		let printStep = this.addElement('li', instr);
 		let print = this.addElement('button', printStep, 'Click here to print the book!');
+		print.style.cursor = 'pointer';
 		printStep.addEventListener('click', () => {
 			window.print();
 		});
