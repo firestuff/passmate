@@ -31,16 +31,16 @@ class PassMate {
 	}
 
 	addOverview(container) {
-		let overview = this.addElement('overview', container);
+		this.overview = this.addElement('overview', container);
 
-		this.addElement('h1', overview, 'PassMate');
-		this.addElement('h2', overview, 'Your Personal Password Book');
-		this.addElement('blurb', overview, 'This website generates unique, secure, random passwords locally on your computer every time you load it. It organizes those passwords into book form, printable at home, with space for a website address and username with each password. When asked to choose a password for a new account, the book\'s owner uses a fresh one from the book, reducing password reuse and thwarting credential stuffing attacks.');
-		this.addElement('blurb', overview, 'Technologically savvy, security conscious people frequently make use of password managers to generate and store passwords. Unfortunately, password managers (especially password generators) are still somewhat complex to use, which creates friction and drives many people away. You probably have friends or family who use one or a few simple passwords across all sites. PassMate isn\'t perfect security, but it can help them significantly increase their account security.');
+		this.addElement('h1', this.overview, 'PassMate');
+		this.addElement('h2', this.overview, 'Your Personal Password Book');
+		this.addElement('blurb', this.overview, 'This website generates unique, secure, random passwords locally on your computer every time you load it. It organizes those passwords into book form, printable at home, with space for a website address and username with each password. When asked to choose a password for a new account, the book\'s owner uses a fresh one from the book, reducing password reuse and thwarting credential stuffing attacks.');
+		this.addElement('blurb', this.overview, 'Technologically savvy, security conscious people frequently make use of password managers to generate and store passwords. Unfortunately, password managers (especially password generators) are still somewhat complex to use, which creates friction and drives many people away. You probably have friends or family who use one or a few simple passwords across all sites. PassMate isn\'t perfect security, but it can help them significantly increase their account security.');
 
-		this.addElement('h2', overview, 'Creating Your Own Book');
+		this.addElement('h2', this.overview, 'Creating Your Own Book');
 
-		let instr = this.addElement('ol', overview);
+		let instr = this.addElement('ol', this.overview);
 
 		let ownerStep = this.addElement('li', instr);
 		let ownerLabel = this.addElement('label', ownerStep, 'Who will this book belong to?');
@@ -75,11 +75,28 @@ class PassMate {
 		let indexNoneItem = this.addElement('li', indexes);
 		index.add('none', this.addElement('button', indexNoneItem, 'None: Use passwords from the beginning'));
 
-		let printReqStep = this.addElement('li', instr, 'Check that your printer supports two-sided printing. You\'ll need to print with the following settings:');
+		let sidedStep = this.addElement('li', instr, 'Choose your preferred printing format:');
+		let sides = this.addElement('ul', sidedStep);
+		let side = new Select((key) => {
+			this.overview.classList.remove('side-one');
+			this.overview.classList.remove('side-two');
+			this.overview.classList.add('side-' + key);
+			this.product.classList.remove('side-one');
+			this.product.classList.remove('side-two');
+			this.product.classList.add('side-' + key);
+		});
+		let sideTwoItem = this.addElement('li', sides);
+		side.add('two', this.addElement('button', sideTwoItem, 'Two-sided: Foldable book (requires printer support)'));
+		let sideOneItem = this.addElement('li', sides);
+		side.add('one', this.addElement('button', sideOneItem, 'One-sided: Loose leaf'));
+
+		let twoSideStep = this.addElement('li', instr, 'Check that your printer supports two-sided printing.', ['side-two']);
+
+		let printReqStep = this.addElement('li', instr, 'You\'ll need to print with the following settings:');
 		let printreqs = this.addElement('ul', printReqStep);
 		this.addElement('li', printreqs, 'Paper size: Letter');
 		this.addElement('li', printreqs, 'Layout/Orientation: Landscape');
-		this.addElement('li', printreqs, 'Two-sided: Long edge (or just enabled)');
+		this.addElement('li', printreqs, 'Two-sided: Long edge (or just enabled)', ['side-two']);
 
 		let printStep = this.addElement('li', instr);
 		let print = this.addElement('button', printStep, 'Click here to print the book!');
@@ -88,16 +105,16 @@ class PassMate {
 			window.print();
 		});
 
-		this.addElement('li', instr, 'Fold the book in half along the line in the center, with the "PassMate: Personal Password Book" title page facing out.');
+		this.addElement('li', instr, 'Fold the book in half along the line in the center, with the "PassMate: Personal Password Book" title page facing out.', ['side-two']);
 
-		this.addElement('li', instr, 'Bind the book with a rubber band along the fold.');
+		this.addElement('li', instr, 'Bind the book with a rubber band along the fold.', ['side-two']);
 
 		this.addElement('li', instr, 'See page 2 of the book for usage instructions.');
 
-		this.addElement('h2', overview, 'Reprinting Your Book');
-		this.addElement('blurb', overview, 'A unique code has been generated for you below. It changes every time you refresh this website. If you\'d like to reprint an existing book, change the code below to the one printed on page 3 of your old book. The new book will contain all the same passwords as the old book. This is all done without the code or passwords ever leaving your computer.');
+		this.addElement('h2', this.overview, 'Reprinting Your Book');
+		this.addElement('blurb', this.overview, 'A unique code has been generated for you below. It changes every time you refresh this website. If you\'d like to reprint an existing book, change the code below to the one printed on page 3 of your old book. The new book will contain all the same passwords as the old book. This is all done without the code or passwords ever leaving your computer.');
 
-		let recoveryLabel = this.addElement('label', overview, 'Recovery Code');
+		let recoveryLabel = this.addElement('label', this.overview, 'Recovery Code');
 		recoveryLabel.classList.add('recovery');
 		this.recoveryIn = this.addElement('input', recoveryLabel);
 		this.recoveryIn.type = 'text';
@@ -107,12 +124,12 @@ class PassMate {
 			this.derivePasswords();
 		});
 
-		this.addElement('h2', overview, 'Questions? Suggestions?');
+		this.addElement('h2', this.overview, 'Questions? Suggestions?');
 
-		let contact = this.addElement('a', overview, 'Contact ian@passmate.io');
+		let contact = this.addElement('a', this.overview, 'Contact ian@passmate.io');
 		contact.href = 'mailto:ian@passmate.io';
 
-		let github = this.addElement('a', overview, 'Source code & issue tracking at GitHub');
+		let github = this.addElement('a', this.overview, 'Source code & issue tracking at GitHub');
 		github.href = 'https://github.com/flamingcowtv/passmate';
 	}
 
