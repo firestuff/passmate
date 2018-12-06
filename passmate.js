@@ -61,7 +61,7 @@ class PassMate {
 		let shortItem = this.addElement('li', formats);
 		format.add('short', this.addElement('button', shortItem, 'Short: 5EQaDfNS'));
 		let readableItem = this.addElement('li', formats);
-		format.add('readable', this.addElement('button', readableItem, 'Readable: LeasedBarneyPlays565'));
+		format.add('readable', this.addElement('button', readableItem, 'Readable: LeasedBarneyPlays565 (too long for some websites)'));
 
 		let indexStep = this.addElement('li', instr, 'Choose your preferred index format:');
 		let indexes = this.addElement('ul', indexStep);
