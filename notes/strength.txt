@@ -1,0 +1,26 @@
+# Gibberish
+# This is our entropy target
+[A-Z][a-z][0-9] * 8
+	26 + 26 + 10 = 62
+	62 ^ 8 = 2.1E14
+
+# Gibberish, visually distinct
+([A-Z][a-z][0-9] - [IOlo01]) * 8
+	26 + 26 + 10 - 6 = 56
+	56 ^ 8 = 9.6E13
+
+# Readable
+5776 words * 4
+	5776 ^ 4 = 1.1E15
+
+# Readable + numbers
+(5776 words * 3) + ([0-9] * 3)
+	(5776 ^ 3) * (10 ^ 3) = 1.9E14
+
+# Readable + visually clear numbers
+(5776 words * 3) + ([0-9] - [01] * 3)
+	(5776 ^ 3) * (8 ^ 3) = 9.8E13
+
+# Pronounceable
+(([BCDFGHJKMNPQRSTVWXYZ] + [AEU]) * 7) + ([0-9] - [01] * 2)
+	((20 * 3) ^ 7) * (8 ^ 2) = 1.7E14
