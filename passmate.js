@@ -293,9 +293,14 @@ class PassMate {
 		}
 
 		for (let [info, container] of this.readablePasswords) {
-			let choices = new Array(6);
-			choices.fill(this.WORDS, 0, 3);
-			choices.fill(this.SAFE_NUM, 3, 6);
+			let choices = [
+				this.WORDS,
+				this.WORDS,
+				this.WORDS,
+				this.SAFE_NUM,
+				this.SAFE_NUM,
+				this.SAFE_NUM,
+			];
 			this.deriveValidArray(key, info, choices, this.validatePassword.bind(this))
 				.then((arr) => {
 					container.innerText = arr.join('');
