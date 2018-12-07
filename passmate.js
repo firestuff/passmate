@@ -56,7 +56,7 @@ class PassMate {
 		});
 
 		let formatStep = this.addElement('li', instr, 'Choose your preferred password format (both provide approximately the same security):');
-		let formats = this.addElement('ul', formatStep);
+		let formats = this.addElement('ul', formatStep, null, ['select']);
 		let format = new Select((key) => {
 			this.product.classList.remove('passwords-short');
 			this.product.classList.remove('passwords-pronounceable');
@@ -71,7 +71,7 @@ class PassMate {
 		format.add('readable', this.addElement('button', readableItem, 'Readable: LeasedBarneyPlays565 (too long for some websites)'));
 
 		let indexStep = this.addElement('li', instr, 'Choose your preferred index format:');
-		let indexes = this.addElement('ul', indexStep);
+		let indexes = this.addElement('ul', indexStep, null, ['select']);
 		let index = new Select((key) => {
 			this.product.classList.remove('index-letters');
 			this.product.classList.remove('index-none');
@@ -83,7 +83,7 @@ class PassMate {
 		index.add('none', this.addElement('button', indexNoneItem, 'None: Use passwords from the beginning'));
 
 		let sidedStep = this.addElement('li', instr, 'Choose your preferred printing format:');
-		let sides = this.addElement('ul', sidedStep);
+		let sides = this.addElement('ul', sidedStep, null, ['select']);
 		let side = new Select((key) => {
 			this.overview.classList.remove('side-one');
 			this.overview.classList.remove('side-two');
@@ -100,10 +100,10 @@ class PassMate {
 		let twoSideStep = this.addElement('li', instr, 'Check that your printer supports two-sided printing.', ['side-two']);
 
 		let printReqStep = this.addElement('li', instr, 'You\'ll need to print with the following settings:');
-		let printreqs = this.addElement('ul', printReqStep);
-		this.addElement('li', printreqs, 'Paper size: Letter');
-		this.addElement('li', printreqs, 'Layout/Orientation: Landscape');
-		this.addElement('li', printreqs, 'Two-sided: Long edge (or just enabled)', ['side-two']);
+		let printReqs = this.addElement('ul', printReqStep, null, ['checklist']);
+		this.addElement('li', printReqs, 'Paper size: Letter');
+		this.addElement('li', printReqs, 'Layout/Orientation: Landscape');
+		this.addElement('li', printReqs, 'Two-sided: Long edge (or just enabled)', ['side-two']);
 
 		let printStep = this.addElement('li', instr);
 		let print = this.addElement('button', printStep, 'Click here to print the book!');
