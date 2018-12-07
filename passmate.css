@@ -404,15 +404,19 @@ overview,product {
 		font-size: 1.1em;
 	}
 
-	passwordAlphaNum,passwordWords {
+	passwordShort,passwordPronounceable,passwordReadable {
 		display: none;
 	}
 
-	product.passwords-short passwordAlphaNum {
+	product.passwords-short passwordShort {
 		display: inline;
 	}
 
-	product.passwords-readable passwordWords {
+	product.passwords-pronounceable passwordPronounceable {
+		display: inline;
+	}
+
+	product.passwords-readable passwordReadable {
 		display: inline;
 	}
 

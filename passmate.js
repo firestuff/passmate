@@ -1,7 +1,10 @@
 class PassMate {
 	constructor(container) {
 		this.SAFE_UALPHA = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
+		this.SAFE_UALPHA_CON = 'BCDFGHJKLMNPQRSTVWXYZ';
 		this.SAFE_LALPHA = 'abcdefghijkmnpqrstuvwxyz';
+		this.SAFE_LALPHA_CON = 'bcdfghjkmnpqrstvwxyz';
+		this.SAFE_LALPHA_VOW = 'aeu';
 		this.SAFE_NUM = '23456789';
 		this.SAFE_ALPHANUM = this.SAFE_UALPHA + this.SAFE_LALPHA + this.SAFE_NUM;
 		this.SAFE_SYMBOL = '!?';
@@ -20,6 +23,7 @@ class PassMate {
 
 		this.pages = [];
 		this.shortPasswords = new Map();
+		this.pronounceablePasswords = new Map();
 		this.readablePasswords = new Map();
 
 		this.addProduct(container);
@@ -55,11 +59,14 @@ class PassMate {
 		let formats = this.addElement('ul', formatStep);
 		let format = new Select((key) => {
 			this.product.classList.remove('passwords-short');
+			this.product.classList.remove('passwords-pronounceable');
 			this.product.classList.remove('passwords-readable');
 			this.product.classList.add('passwords-' + key);
 		});
 		let shortItem = this.addElement('li', formats);
 		format.add('short', this.addElement('button', shortItem, 'Short: 5EQaDfNS'));
+		let pronounceableItem = this.addElement('li', formats);
+		format.add('pronounceable', this.addElement('button', pronounceableItem, 'Pronounceable: KebeDuveBagica39'));
 		let readableItem = this.addElement('li', formats);
 		format.add('readable', this.addElement('button', readableItem, 'Readable: LeasedBarneyPlays565 (too long for some websites)'));
 
@@ -210,10 +217,13 @@ class PassMate {
 				password.style.gridArea = 'password';
 				this.shortPasswords.set(
 					letter + '-' + (i % pagesPerLetter).toString() + '-' + j.toString(),
-					this.addElement('passwordAlphaNum', password));
+					this.addElement('passwordShort', password));
+				this.pronounceablePasswords.set(
+					letter + '-' + (i % pagesPerLetter).toString() + '-' + j.toString(),
+					this.addElement('passwordPronounceable', password));
 				this.readablePasswords.set(
 					letter + '-' + (i % pagesPerLetter).toString() + '-' + j.toString(),
-					this.addElement('passwordWords', password));
+					this.addElement('passwordReadable', password));
 				this.addElement('passwordSymbols', password, this.SAFE_SYMBOL);
 
 				this.addElement('websiteLabel', pwblock, 'Website:').style.gridArea = 'websiteLabel';
@@ -297,6 +307,32 @@ class PassMate {
 				this.WORDS,
 				this.WORDS,
 				this.WORDS,
+				this.SAFE_NUM,
+				this.SAFE_NUM,
+				this.SAFE_NUM,
+			];
+			this.deriveValidArray(key, info, choices, this.validatePassword.bind(this))
+				.then((arr) => {
+					container.innerText = arr.join('');
+				});
+		}
+
+		for (let [info, container] of this.pronounceablePasswords) {
+			let choices = [
+				this.SAFE_UALPHA_CON,
+				this.SAFE_LALPHA_VOW,
+				this.SAFE_LALPHA_CON,
+				this.SAFE_LALPHA_VOW,
+				this.SAFE_UALPHA_CON,
+				this.SAFE_LALPHA_VOW,
+				this.SAFE_LALPHA_CON,
+				this.SAFE_LALPHA_VOW,
+				this.SAFE_UALPHA_CON,
+				this.SAFE_LALPHA_VOW,
+				this.SAFE_LALPHA_CON,
+				this.SAFE_LALPHA_VOW,
+				this.SAFE_LALPHA_CON,
+				this.SAFE_LALPHA_VOW,
 				this.SAFE_NUM,
 				this.SAFE_NUM,
 				this.SAFE_NUM,

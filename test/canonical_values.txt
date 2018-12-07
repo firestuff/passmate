@@ -4,6 +4,11 @@ A6Fe2bnneuTMUNEAVKQpjNQq74BQVG5JB
 		A-0-1: qhqv9Myy
 		A-1-0: MzyhW9Np
 		Z-1-4: 5EQaDfNS
+	Pronounceable
+		A-0-0: DetaNemaJekada532
+		A-0-1: JuquSafaCedece842
+		A-1-0: PuvuZahaTuzaxu628
+		Z-1-4: YataFeraQerura389
 	Readable
 		A-0-0: ReactorsHybridElected875
 		A-0-1: OlderOwnerGeneric253
