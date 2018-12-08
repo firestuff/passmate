@@ -109,9 +109,16 @@ class PassMate {
 		let print = this.addElement('button', printStep, 'Click here to print the book!');
 		print.style.cursor = 'pointer';
 		printStep.addEventListener('click', () => {
+			let cls = [];
+			for (let cl of this.product.classList) {
+				cls.push(cl);
+			}
+			cls.sort();
+
 			let gtag = window.gtag || (() => {});
 			gtag('event', 'print', {
 				'event_category': 'Overview',
+				'event_label': cls.join(' '),
 			});
 			window.print();
 		});
