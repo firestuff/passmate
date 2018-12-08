@@ -109,7 +109,7 @@ class PassMate {
 		let print = this.addElement('button', printStep, 'Click here to print the book!');
 		print.style.cursor = 'pointer';
 		printStep.addEventListener('click', () => {
-			let ga = window.ga || () => {};
+			let ga = window.ga || (() => {});
 			ga('send', 'event', 'Overview', 'print');
 			window.print();
 		});
